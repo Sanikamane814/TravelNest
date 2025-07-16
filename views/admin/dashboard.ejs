@@ -1,0 +1,380 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container-fluid px-4 py-4">
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div>
+      <h1 class="h3 fw-bold text-dark"><i class="bi bi-speedometer2 me-2"></i>TravelNest Admin Dashboard</h1>
+      <p class="text-muted mb-0">Comprehensive overview of platform analytics</p>
+    </div>
+    <div class="bg-primary bg-opacity-10 px-3 py-2 rounded">
+      <span class="text-primary fw-bold"><%= new Date().toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %></span>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-start border-primary border-4 shadow h-100 py-2">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-shape bg-primary bg-opacity-10 text-primary rounded-circle p-3">
+                <i class="bi bi-people-fill fs-4"></i>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs fw-bold text-primary text-uppercase">Total Users</div>
+              <div class="h5 mb-0 fw-bold text-gray-800"><%= users.length %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-start border-success border-4 shadow h-100 py-2">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-shape bg-success bg-opacity-10 text-success rounded-circle p-3">
+                <i class="bi bi-house-door-fill fs-4"></i>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs fw-bold text-success text-uppercase">Active Listings</div>
+              <div class="h5 mb-0 fw-bold text-gray-800"><%= listings.length %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-start border-info border-4 shadow h-100 py-2">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-shape bg-info bg-opacity-10 text-info rounded-circle p-3">
+                <i class="bi bi-calendar-check-fill fs-4"></i>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs fw-bold text-info text-uppercase">Total Bookings</div>
+              <div class="h5 mb-0 fw-bold text-gray-800"><%= bookings.length %></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-xl-3 col-md-6 mb-4">
+      <div class="card border-start border-warning border-4 shadow h-100 py-2">
+        <div class="card-body">
+          <div class="d-flex align-items-center">
+            <div class="me-3">
+              <div class="icon-shape bg-warning bg-opacity-10 text-warning rounded-circle p-3">
+                <i class="bi bi-star-fill fs-4"></i>
+              </div>
+            </div>
+            <div>
+              <div class="text-xs fw-bold text-warning text-uppercase">Avg. Rating</div>
+              <div class="h5 mb-0 fw-bold text-gray-800">
+                <% const avgRating = reviews.reduce((acc, review) => acc + review.rating, 0) / reviews.length; %>
+                <%= isNaN(avgRating) ? 'N/A' : avgRating.toFixed(1) %> ⭐
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="row">
+    <!-- Users Section -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow h-100">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+          <h6 class="m-0 fw-bold text-primary"><i class="bi bi-people-fill me-2"></i>All Users</h6>
+          <span class="badge bg-primary rounded-pill"><%= users.length %> users</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Role</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% users.forEach(user => { %>
+                  <tr>
+                    <td>
+                      <div class="d-flex align-items-center">
+                        <div class="avatar bg-primary bg-opacity-10 text-primary rounded-circle me-2" style="width: 36px; height: 36px; line-height: 36px; text-align: center;">
+                          <%= user.username.charAt(0).toUpperCase() %>
+                        </div>
+                        <div class="fw-bold"><%= user.username %></div>
+                      </div>
+                    </td>
+                    <td><%= user.email %></td>
+                    <td>
+                      <span class="badge <%= user.role === 'admin' ? 'bg-danger' : 'bg-secondary' %>">
+                        <%= user.role || 'user' %>
+                      </span>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Listings Section -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow h-100">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+          <h6 class="m-0 fw-bold text-success"><i class="bi bi-house-door-fill me-2"></i>Listings Created</h6>
+          <span class="badge bg-success rounded-pill"><%= listings.length %> listings</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Title</th>
+                  <th>Owner</th>
+                  <th>Created</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% listings.forEach(listing => { %>
+                  <tr>
+                    <td class="fw-bold"><%= listing.title %></td>
+                    <td><%= listing.owner?.username || 'Deleted User' %></td>
+                    <td><%= listing.createdAt?.toDateString() || 'N/A' %></td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Second Row -->
+  <div class="row">
+    <!-- Bookings Section -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow h-100">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+          <h6 class="m-0 fw-bold text-info"><i class="bi bi-calendar-check-fill me-2"></i>All Bookings</h6>
+          <div>
+            <span class="badge bg-info rounded-pill me-1"><%= bookings.length %> total</span>
+            <span class="badge bg-danger rounded-pill"><%= bookings.filter(b => b.status === 'cancelled').length %> cancelled</span>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Guest</th>
+                  <th>Property</th>
+                  <th>Dates</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% bookings.forEach(booking => { %>
+                  <tr>
+                    <td><%= booking.user?.username || 'Unknown' %></td>
+                    <td><%= booking.listing?.title || 'Deleted Listing' %></td>
+                    <td>
+                      <small><%= new Date(booking.checkIn).toDateString() %> to <%= new Date(booking.checkOut).toDateString() %></small>
+                    </td>
+                    <td>
+                      <span class="badge <%= booking.status === 'cancelled' ? 'bg-danger' : 'bg-success' %>">
+                        <%= booking.status %>
+                      </span>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reviews Section -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow h-100">
+        <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+          <h6 class="m-0 fw-bold text-warning"><i class="bi bi-star-fill me-2"></i>Guest Reviews</h6>
+          <span class="badge bg-warning rounded-pill"><%= reviews.length %> reviews</span>
+        </div>
+        <div class="card-body p-0">
+          <div class="table-responsive">
+            <table class="table table-hover mb-0">
+              <thead class="bg-light">
+                <tr>
+                  <th>Reviewer</th>
+                  <th>Property</th>
+                  <th>Rating</th>
+                  <th>Feedback</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% reviews.forEach(review => { %>
+                  <tr>
+                    <td><%= review.author?.username || 'Anonymous' %></td>
+                    <td><%= review.listing?.title || 'Deleted Listing' %></td>
+                    <td>
+                      <div class="rating-stars">
+                        <% for (let i = 1; i <= 5; i++) { %>
+                          <i class="bi bi-star-fill <%= i <= review.rating ? 'text-warning' : 'text-secondary opacity-25' %>"></i>
+                        <% } %>
+                        <span class="ms-1"><%= review.rating %></span>
+                      </div>
+                    </td>
+                    <td class="text-truncate" style="max-width: 150px;" title="<%= review.comment || 'No comment' %>">
+                      <%= (review.comment || '').length > 30 ? (review.comment || '').substring(0, 30) + '...' : review.comment || 'No comment' %>
+                    </td>
+                  </tr>
+                <% }) %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  
+
+  /* dashboard  */
+  
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.card-header {
+  border-radius: 0.5rem 0.5rem 0 0 !important;
+}
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+}
+
+.icon-shape {
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.table {
+  font-size: 0.9rem;
+}
+
+.table th {
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+  color: #6c757d;
+}
+
+.rating-stars {
+  white-space: nowrap;
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(0, 0, 0, 0.02);
+}
+
+.badge {
+  font-weight: 500;
+  padding: 0.35em 0.65em;
+}
+
+
+
+
+  /* login */
+  
+
+    /* Full-screen login container with background image */
+    .login-container {
+      background-image: url('https://images.unsplash.com/photo-1593642634347-d7a8e8bb5b4e');
+      background-size: cover;
+      background-position: center;
+      height: 100vh;
+  }
+
+  /* Center the login card */
+  .login-card {
+      background-color: rgba(255, 255, 255, 0.8); /* Semi-transparent background */
+      max-width: 400px;
+      width: 100%;
+      border-radius: 16px;
+  }
+
+  /* Form Fields */
+  .form-control:focus {
+      border-color: #FF5A5F; /* Airbnb's signature red */
+      box-shadow: 0 0 5px rgba(255, 90, 95, 0.5);
+  }
+
+  /* Button */
+  .btn-primary {
+      background-color: #FF5A5F; /* Airbnb's signature red */
+      border-color: #FF5A5F;
+      font-weight: bold;
+  }
+
+  .btn-primary:hover {
+      background-color: #ff6f72;
+      border-color: #ff6f72;
+  }
+
+  /* Optional Sign Up Link */
+  .text-center p a {
+      color: #FF5A5F;
+      text-decoration: none;
+      font-weight: bold;
+  }
+
+  /* Input Validation */
+  .invalid-feedback {
+      font-size: 0.875rem;
+      color: #ff385c;
+  }
+
+  /* Responsiveness */
+  @media (max-width: 768px) {
+      .login-card {
+          padding: 3rem;
+      }
+  }
+ 
+
+</style>

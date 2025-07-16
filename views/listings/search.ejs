@@ -1,0 +1,65 @@
+<% layout("/layouts/boilerplate") %>
+<!-- Main Container -->
+<div class="container-fluid px-lg-5 px-md-3 px-sm-2 mt-4">
+  <!-- Search Header -->
+  <div class="search-header mb-5 text-center">
+    <h2 class="display-5 fw-bold mb-3">Search results for "<span class="text-primary"><%= query %></span>"</h2>
+    <p class="text-muted"><%= allResults.length %> properties found</p>
+  </div>
+
+  <!-- No Results Message -->
+  <% if (allResults.length === 0) { %>
+    <div class="no-results text-center py-5">
+      <i class="fas fa-search fa-3x mb-4 text-muted"></i>
+      <h4 class="fw-semibold">No listings found</h4>
+      <p class="text-muted">Try adjusting your search or filters</p>
+      <a href="/listings" class="btn btn-outline-primary mt-3">Browse all listings</a>
+    </div>
+  <% } %>
+
+  <!-- Search Results Grid -->
+  <div class="row g-4">
+    <% for (let listing of allResults) { %>
+      <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+        <div class="listing-card card h-100 border-0 shadow-sm overflow-hidden position-relative">
+          <!-- Image with Badge -->
+          <div class="position-relative">
+            <img src="<%= listing.image.url %>" class="card-img-top listing-img" alt="<%= listing.title %>">
+            <% if (listing.price < 1000) { %>
+              <span class="badge bg-success position-absolute top-0 end-0 m-2">Great Deal</span>
+            <% } %>
+          </div>
+
+          <!-- Card Body -->
+          <div class="card-body position-relative">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="card-title mb-0 fw-semibold text-truncate"><%= listing.title %></h5>
+              <div class="d-flex align-items-center">
+                <i class="fas fa-star text-warning small me-1"></i>
+                <span class="small">4.8</span>
+              </div>
+            </div>
+            
+            <p class="text-muted small mb-2"><%= listing.location %>, <%= listing.country %></p>
+            
+            <div class="d-flex justify-content-between align-items-center mt-3">
+              <div>
+                <span class="fw-bold h5 text-dark">₹<%= listing.price.toLocaleString("en-IN") %></span>
+                <span class="text-muted small"> / night</span>
+                <p class="text-muted small mb-0">+18% GST</p>
+              </div>
+              
+
+ <!-- View Button -->
+            <% if (listing._id) { %>
+              <a href="/listings/<%= listing._id %>" class="btn btn-primary btn-sm rounded-pill px-3 py-1">View</a>
+            <% } else { %>
+              <p class="text-muted" style="font-size: 0.8rem;">(Sample Listing)</p>
+            <% } %>
+          </div>
+        </div>
+      </a>
+    <% } %>
+              
+  </div>
+</div>

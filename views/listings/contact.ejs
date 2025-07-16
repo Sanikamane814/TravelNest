@@ -1,0 +1,95 @@
+<% layout("/layouts/boilerplate") %>
+
+<title>Contact Us | TravelNest</title>
+
+<div class="contact-page-wrapper">
+  <header class="contact-header text-center">
+    <h1><i class="fa-solid fa-envelope-circle-check me-2"></i>Contact Us</h1>
+    <p class="lead">Have a question, feedback, or need help? Reach out to us — we're here for you!</p>
+  </header>
+
+  <main class="contact-form container">
+    <form id="contactForm" class="row g-3 needs-validation" novalidate>
+      <div class="col-md-6">
+        <label for="name" class="form-label">Full Name</label>
+        <input type="text" class="form-control" id="name" name="name" required>
+        <div class="invalid-feedback">Please enter your full name.</div>
+      </div>
+
+      <div class="col-md-6">
+        <label for="email" class="form-label">Email Address</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+        <div class="invalid-feedback">Please enter a valid email.</div>
+      </div>
+
+      <div class="col-12">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" class="form-control" id="subject" name="subject" required>
+        <div class="invalid-feedback">Please enter a subject.</div>
+      </div>
+
+      <div class="col-12">
+        <label for="message" class="form-label">Message</label>
+        <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+        <div class="invalid-feedback">Please enter a message.</div>
+      </div>
+
+      <div class="col-12 text-center mt-3">
+        <button type="submit" class="btn contact-btn">Send Message</button>
+      </div>
+    </form>
+  </main>
+</div>
+
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<!-- Bootstrap validation + AJAX -->
+<script>
+  const form = document.getElementById('contactForm');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    form.classList.add('was-validated');
+
+    if (!form.checkValidity()) return;
+
+    const formData = {
+      name: form.name.value,
+      email: form.email.value,
+      subject: form.subject.value,
+      message: form.message.value,
+    };
+
+    try {
+      const response = await fetch('/listings/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Message Sent!',
+          text: result.message,
+          confirmButtonColor: '#ff5a5f'
+        });
+
+        form.reset();
+        form.classList.remove('was-validated');
+      } else {
+        throw new Error(result.message || 'Failed to send message.');
+      }
+    } catch (err) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: err.message,
+        confirmButtonColor: '#ff5a5f'
+      });
+    }
+  });
+</script>

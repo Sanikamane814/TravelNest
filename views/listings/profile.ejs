@@ -1,0 +1,155 @@
+ <% layout('/layouts/boilerplate') %>
+
+
+<!-- Profile Content -->
+<div class="profile-header text-center">
+  <div class="container">
+    <img src="https://i.pravatar.cc/150?u=<%= user._id %>" class="profile-avatar mb-3" alt="Profile Picture">
+    <h2 class="mb-2"><%= user.username %></h2>
+    <p class="mb-1"><i class="fas fa-envelope"></i> <%= user.email %></p>
+    <span class="travelnest-badge">
+      <i class="fas fa-calendar-alt"></i> Member since <%= user.createdAt ? new Date(user.createdAt).toLocaleDateString() : "N/A" %>
+    </span>
+  </div>
+</div>
+
+<div class="container pb-5">
+  <div class="row">
+    <!-- Main Profile Section -->
+    <div class="col-lg-8">
+      <!-- User Listings -->
+      <div class="profile-card">
+        <div class="card-header">
+          <i class="fas fa-map-marked-alt section-icon"></i> Your TravelNest Listings
+        </div>
+        <div class="card-body">
+          <% if (listings.length > 0) { %>
+            <div class="row">
+              <% listings.forEach(listing => { %>
+                <div class="col-md-6 mb-3">
+                  <div class="listing-card p-3">
+                    <h5><%= listing.title %></h5>
+                    <p class="text-muted mb-2">
+                      <i class="fas fa-map-marker-alt text-danger"></i> <%= listing.location %>, <%= listing.country %>
+                    </p>
+                    <div class="d-flex justify-content-between align-items-center">
+                      <span class="text-primary fw-bold">₹<%= listing.price %></span>
+                      <a href="/listings/<%= listing._id %>" class="btn btn-sm btn-travelnest-outline">View Details</a>
+                    </div>
+                  </div>
+                </div>
+              <% }) %>
+            </div>
+          <% } else { %>
+            <div class="text-center py-4">
+              <i class="fas fa-home fa-3x text-muted mb-3"></i>
+              <h5>No listings yet</h5>
+              <p class="text-muted">You haven't created any travel listings</p>
+              <a href="/listings/new" class="btn btn-travelnest">Create Your First Listing</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+
+      <!-- User Bookings -->
+      <div class="profile-card">
+        <div class="card-header">
+          <i class="fas fa-calendar-check section-icon"></i> Your TravelNest Bookings
+        </div>
+        <div class="card-body">
+          <% if (bookings.length > 0) { %>
+            <div class="table-responsive">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Listing</th>
+                    <th>Dates</th>
+                    <th>Guests</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% bookings.forEach(booking => { %>
+                    <tr>
+                      <td>
+                        <strong><%= booking.listing?.title || "Deleted Listing" %></strong>
+                        <br>
+                        <small class="text-muted"><%= booking.listing?.location || "Unknown" %></small>
+                      </td>
+                      <td>
+                        <%= booking.checkIn ? new Date(booking.checkIn).toLocaleDateString() : "N/A" %> - 
+                        <%= booking.checkOut ? new Date(booking.checkOut).toLocaleDateString() : "N/A" %>
+                      </td>
+                      <td><%= booking.guests %></td>
+                      <td>
+                        <span class="booking-status <%= booking.status === 'confirmed' ? 'status-confirmed' : 'status-cancelled' %>">
+                          <%= booking.status || "N/A" %>
+                        </span>
+                      </td>
+                      <td>
+                        <% if (booking.status === 'confirmed') { %>
+                            <a href="/booking/<%= booking._id %>/cancel" class="btn btn-outline-airbnb ">❌ Cancel Booking</a>
+                           
+                          </form>
+                        <% } %>
+                      </td>
+                    </tr>
+                  <% }) %>
+                </tbody>
+              </table>
+            </div>
+          <% } else { %>
+            <div class="text-center py-4">
+              <i class="fas fa-calendar-times fa-3x text-muted mb-3"></i>
+              <h5>No bookings yet</h5>
+              <p class="text-muted">You haven't booked any travel experiences</p>
+              <a href="/listings" class="btn btn-travelnest">Explore Listings</a>
+            </div>
+          <% } %>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sidebar Section -->
+    <div class="col-lg-4">
+      <!-- Profile Actions -->
+      <div class="profile-card mb-4">
+        <div class="card-header">
+          <i class="fas fa-user-cog section-icon"></i> Profile Actions
+        </div>
+        <div class="card-body">
+          <div class="d-grid gap-2">
+            <a href="/users/<%= user._id %>/Profileedit" class="btn btn-travelnest">
+              <i class="fas fa-user-edit me-2"></i> Edit Profile
+            </a>
+            <a href="/listings/new" class="btn btn-travelnest-outline">
+              <i class="fas fa-plus-circle me-2"></i> Create New Listing
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Stats -->
+      <div class="profile-card">
+        <div class="card-header">
+          <i class="fas fa-chart-line section-icon"></i> Your TravelNest Stats
+        </div>
+        <div class="card-body">
+          <div class="d-flex justify-content-between mb-3">
+            <span><i class="fas fa-home text-primary me-2"></i> Listings</span>
+            <span class="fw-bold"><%= listings.length %></span>
+          </div>
+          <div class="d-flex justify-content-between mb-3">
+            <span><i class="fas fa-calendar-check text-success me-2"></i> Bookings</span>
+            <span class="fw-bold"><%= bookings.length %></span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span><i class="fas fa-star text-warning me-2"></i> Reviews</span>
+            <span class="fw-bold">Coming Soon</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

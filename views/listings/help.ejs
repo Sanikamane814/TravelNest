@@ -1,0 +1,151 @@
+<% layout("/layouts/boilerplate") %>
+
+<%
+  const queryValue = typeof searchQuery !== 'undefined' ? searchQuery : '';
+  const results = typeof searchResults !== 'undefined' ? searchResults : [];
+%>
+
+<title>Help Center | TravelNest</title>
+
+<div class="container py-5 help-center-container">
+  <!-- Header -->
+  <div class="text-center mb-5">
+    <h1 class="help-title">Help Center</h1>
+    <p class="lead text-muted">How can we help you today?</p>
+
+    <!-- Search Form -->
+    <form action="/listings/help-center" method="GET" class="d-flex mx-auto" style="max-width: 500px;">
+      <input
+        type="text"
+        name="q"
+        class="form-control me-2"
+        placeholder="Search your listings..."
+        value="<%= typeof searchQuery !== 'undefined' ? searchQuery : '' %>"
+        required
+      />
+      <button class="btn btn-outline-primary" type="submit">Search</button>
+    </form>
+    
+  </div>
+ 
+
+
+  <!-- Search Results Section -->
+  <% if (queryValue && results.length > 0) { %>
+    <h4 class="mb-4">Search Results for "<%= queryValue %>"</h4>
+    <div class="row g-4">
+      <% results.forEach(listing => { %>
+        <div class="col-md-4">
+          <div class="help-card">
+            <img src="<%= listing.image.url %>" class="card-img-top mb-3 rounded" style="height: 180px; object-fit: cover;" />
+            <h5><%= listing.title %></h5>
+            <p><%= listing.location %>, <%= listing.country %></p>
+            <a href="/listings/<%= listing._id %>" class="read-more">View Listing →</a>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% } else if (queryValue) { %>
+    <div class="text-center mt-4">
+      <h5>No results found for "<%= queryValue %>"</h5>
+      <p class="text-muted">Try searching with a different keyword.</p>
+    </div>
+  <% } else { %>
+    <!-- Default Help Cards -->
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-calendar-check icon"></i>
+          <h5>Booking & Cancellations</h5>
+          <p>Find answers about bookings, cancellations, and refund policies.</p>
+          <a href="/listings/cancelBooking" class="read-more">Learn more →</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-user-shield icon"></i>
+          <h5>Account & Security</h5>
+          <p>Manage your account, update passwords, or secure your information.</p>
+          <a href="/users/profile" class="read-more">Manage account →</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-money-check-dollar icon"></i>
+          <h5>Payments</h5>
+          <p>Learn about charges, receipts, and payment methods.</p>
+          <a href="/listings/payment" class="read-more">Payment info →</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-house-chimney icon"></i>
+          <h5>Listing Issues</h5>
+          <p>Report problems with your listing or guest experience.</p>
+          <a href="/listings/new" class="read-more">Submit listing →</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-circle-info icon"></i>
+          <h5>Terms & Privacy</h5>
+          <p>Understand our terms of service and privacy policies.</p>
+          <a href="/privacy" class="read-more">Privacy Policy →</a>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="help-card">
+          <i class="fa-solid fa-headset icon"></i>
+          <h5>Need More Help?</h5>
+          <p>Still have questions? Our support team is here for you.</p>
+          <a href="/contact" class="read-more">Contact Support →</a>
+        </div>
+      </div>
+    </div>
+  <% } %>
+
+  <!-- FAQ -->
+  <div class="mt-5">
+    <h3 class="mb-4">Frequently Asked Questions</h3>
+    <div class="accordion" id="faqAccordion">
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq1">
+          <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapse1">
+            How can I cancel a booking?
+          </button>
+        </h2>
+        <div id="collapse1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            You can cancel a booking from your profile dashboard or through the cancel link in the Help Center.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq2">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse2">
+            How do I receive a refund?
+          </button>
+        </h2>
+        <div id="collapse2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            Refunds are processed automatically within 5-7 business days after a valid cancellation.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item">
+        <h2 class="accordion-header" id="faq3">
+          <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse3">
+            How can I contact support?
+          </button>
+        </h2>
+        <div id="collapse3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+          <div class="accordion-body">
+            You can reach our support team through the Contact page or by emailing help@travelnest.com.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

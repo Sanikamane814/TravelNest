@@ -1,0 +1,243 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Filters & GST Toggle -->
+<div id="filters" class="mb-4">
+  <div class="filter"><i class="fa-solid fa-fire"></i><p>Trending</p></div>
+  <div class="filter"><i class="fa-solid fa-bed"></i><p>Rooms</p></div>
+  <div class="filter"><i class="fa-solid fa-mountain-city"></i><p>Iconic Cities</p></div>
+  <div class="filter"><i class="fa-solid fa-mountain"></i><p>Mountains</p></div>
+  <div class="filter"><i class="fa-brands fa-fort-awesome"></i><p>Castles</p></div>
+  <div class="filter"><i class="fa-solid fa-person-swimming"></i><p>Pools</p></div>
+  <div class="filter"><i class="fa-solid fa-campground"></i><p>Camping</p></div>
+  <div class="filter"><i class="fa-solid fa-cow"></i><p>Farms</p></div>
+  <div class="filter"><i class="fa-solid fa-snowflake"></i><p>Arctic</p></div>
+  <div class="filter"><i class="fa-solid fa-igloo"></i><p>Domes</p></div>
+  <div class="filter"><i class="fa-solid fa-ship"></i><p>Boats</p></div>
+
+  <div class="tax-toggle">
+    <div class="form-check-reverse form-switch">
+      <input class="form-check-input" type="checkbox" role="switch" id="switchCheckDefault">
+      <label class="form-check-label" for="switchCheckDefault">Display total after taxes</label>
+    </div> 
+  </div>
+</div>
+
+<!-- Listing Cards -->
+<div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1 g-4">
+  <% for (let listing of allListings) { %>
+    <div class="col">
+      <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
+        <div class="card listing-card h-100 border-0 shadow-sm">
+          <div class="position-relative">
+            <img src="<%= listing.image.url %>" class="card-img-top listing-image" alt="<%= listing.title %>">
+            
+            <!-- Guest Favorite Badge -->
+            <div class="position-absolute top-0 start-0 m-2">
+              <span class="badge bg-white text-dark fw-normal">
+                <i class="fa-solid fa-medal text-danger me-1"></i> Guest favorite
+              </span>
+            </div>
+            
+            <!-- Heart Icon -->
+            <div class="position-absolute top-0 end-0 m-2">
+              <button class="btn btn-sm btn-light rounded-circle p-2 heart-button">
+                <i class="fa-regular fa-heart"></i>
+              </button>
+            </div>
+          </div>
+          
+          <div class="card-body p-3">
+            <div class="d-flex justify-content-between align-items-start mb-1">
+              <h5 class="card-title mb-0 fw-semibold text-truncate"><%= listing.title %></h5>
+            </div>
+            
+            <div class="text-muted mb-1">
+              <small><%= listing.location || 'Location not specified' %></small>
+            </div>
+            
+            <div class="d-flex align-items-center">
+              <i class="fa-solid fa-star text-warning me-1"></i>
+              <span class="me-2"><%= listing.rating || 'New' %></span>
+              
+              <% if (listing.reviewCount) { %>
+                <span class="text-muted">(<%= listing.reviewCount %> reviews)</span>
+              <% } %>
+            </div>
+            
+            <div class="mt-2">
+              <span class="fw-bold fs-5">₹<%= listing.price ? listing.price.toLocaleString("en-IN") : 'N/A' %></span>
+              <span class="text-muted"> night</span>
+              <span class="tax-info text-danger ms-2">+18% GST</span>
+            </div>
+          </div>
+        </div>
+      </a>
+    </div>
+  <% } %>
+</div>
+
+<script>
+  // Toggle tax info visibility
+  document.getElementById("switchCheckDefault").addEventListener("change", function() {
+    document.querySelectorAll(".tax-info").forEach(el => {
+      el.style.display = this.checked ? "inline" : "none";
+    });
+  });
+
+  // Toggle heart icon
+  document.querySelectorAll(".heart-button").forEach(button => {
+    button.addEventListener("click", function(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      const icon = this.querySelector("i");
+      icon.classList.toggle("fa-regular");
+      icon.classList.toggle("fa-solid");
+      icon.classList.toggle("text-danger");
+    });
+  });
+
+  // Filter category selection
+  document.querySelectorAll(".filter").forEach(filter => {
+    filter.addEventListener("click", function() {
+      document.querySelectorAll(".filter").forEach(f => f.classList.remove("active"));
+      this.classList.add("active");
+      // Add your filter logic here
+    });
+  });
+</script>
+
+<style>
+  /* Filter Section */
+  #filters {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 0;
+    border-bottom: 1px solid #eee;
+  }
+
+  .filter {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 12px;
+    cursor: pointer;
+    border-radius: 20px;
+    transition: all 0.2s ease;
+  }
+
+  .filter i {
+    font-size: 18px;
+    color: #717171;
+  }
+
+  .filter p {
+    margin: 0;
+    font-size: 12px;
+    font-weight: 500;
+    color: #717171;
+  }
+
+  .filter:hover, .filter.active {
+    background-color: #f7f7f7;
+  }
+
+  .filter:hover i, .filter:hover p,
+  .filter.active i, .filter.active p {
+    color: #000;
+  }
+
+  .tax-toggle {
+    margin-left: auto;
+    white-space: nowrap;
+  }
+
+  /* Listing Cards */
+  .listing-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    border-radius: 10px !important;
+    overflow: hidden;
+  }
+
+  .listing-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1) !important;
+  }
+
+  .listing-image {
+    height: 250px;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .listing-card:hover .listing-image {
+    transform: scale(1.03);
+  }
+
+  .card-title {
+    font-size: 16px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .tax-info {
+    display: none;
+    font-size: 13px;
+  }
+
+  .heart-button {
+    transition: all 0.2s ease;
+    background-color: rgba(255, 255, 255, 0.8) !important;
+  }
+
+  .heart-button:hover {
+    background-color: white !important;
+    transform: scale(1.1);
+  }
+
+  .heart-button i {
+    transition: all 0.2s ease;
+  }
+
+  .heart-button i.text-danger {
+    color: #ff385c !important;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 992px) {
+    #filters {
+      overflow-x: auto;
+      padding-bottom: 10px;
+      flex-wrap: nowrap;
+    }
+    
+    .listing-image {
+      height: 200px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .listing-image {
+      height: 180px;
+    }
+    
+    .tax-toggle {
+      margin-left: 0;
+      margin-top: 15px;
+      width: 100%;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .listing-image {
+      height: 160px;
+    }
+    
+    .card-title {
+      font-size: 15px;
+    }
+  }
+</style>

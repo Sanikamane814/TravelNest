@@ -1,0 +1,493 @@
+<style>
+  
+/* navbar */
+
+
+:root {
+  --travelnest-red: #FF5A5F;
+  --travelnest-dark: #222222;
+  --travelnest-light: #FFFFFF;
+  --travelnest-blue: #00A699;
+  --travelnest-gray: #F7F7F7;
+  --travelnest-text: #484848;
+  --travelnest-shadow: 0 4px 30px rgba(0, 0, 0, 0.08);
+}
+
+/* Navbar Container */
+.travelnest-navbar {
+  background: var(--travelnest-light);
+  backdrop-filter: blur(10px);
+  box-shadow: var(--travelnest-shadow);
+  padding: 0.5rem 2rem;
+  font-family: 'Poppins', sans-serif;
+  transition: all 0.3s ease;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  z-index: 1030;
+}
+
+/* Brand Logo */
+.navbar-brand {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--travelnest-red) !important;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover {
+  transform: scale(1.02);
+}
+
+.navbar-brand i {
+  font-size: 1.8rem;
+  color: var(--travelnest-red);
+  transition: transform 0.3s ease;
+}
+
+.navbar-brand:hover i {
+  transform: rotate(-10deg);
+}
+
+/* Mobile Toggle */
+.navbar-toggler {
+  border: none;
+  padding: 0.5rem;
+  font-size: 1.5rem;
+  color: var(--travelnest-red);
+}
+
+/* Nav Links */
+.nav-link {
+  font-weight: 600;
+  color: var(--travelnest-text) !important;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0.25rem;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.nav-link:hover {
+  color: var(--travelnest-red) !important;
+  background: rgba(255, 90, 95, 0.08);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 0;
+  height: 3px;
+  background: var(--travelnest-red);
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+.nav-link:hover::after {
+  width: 50%;
+}
+
+/* Search Bar */
+.search-bar {
+  background: var(--travelnest-light);
+  border-radius: 50px;
+  padding: 0.5rem 1.25rem;
+  gap: 1rem;
+  box-shadow: var(--travelnest-shadow);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  margin: 0 1.5rem;
+  max-width: 700px;
+}
+
+.search-bar:hover {
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.12);
+}
+
+.search-bar input,
+.search-bar select {
+  border: none;
+  background: transparent;
+  font-size: 0.95rem;
+  padding: 0.6rem 1rem;
+  min-width: 130px;
+  color: var(--travelnest-text);
+  font-weight: 500;
+}
+
+.search-bar input::placeholder {
+  color: #999;
+}
+
+.search-bar input:focus,
+.search-bar select:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.search-divider {
+  height: 30px;
+  width: 1px;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.btn-search {
+  background: var(--travelnest-red);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+}
+
+.btn-search:hover {
+  background: #e04b50;
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* User Dropdown */
+.user-dropdown {
+  border: none;
+  background: var(--travelnest-gray);
+  border-radius: 50px;
+  padding: 0.4rem 0.9rem 0.4rem 0.4rem;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+}
+
+.user-dropdown:hover {
+  background: rgba(255, 90, 95, 0.1);
+  transform: translateY(-2px);
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-right: 0.75rem;
+  border: 2px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dropdown-menu {
+  border: none;
+  border-radius: 16px;
+  padding: 0.75rem;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  margin-top: 0.75rem;
+  min-width: 220px;
+}
+
+.dropdown-item {
+  border-radius: 10px;
+  padding: 0.8rem 1rem;
+  font-weight: 500;
+  color: var(--travelnest-text);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  transition: all 0.2s ease;
+  margin: 0.2rem 0;
+}
+
+.dropdown-item i {
+  width: 22px;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+.dropdown-item:hover {
+  background: rgba(255, 90, 95, 0.1);
+  color: var(--travelnest-red);
+  transform: translateX(5px);
+}
+
+.dropdown-divider {
+  border-color: rgba(0, 0, 0, 0.08);
+  margin: 0.5rem 0;
+}
+
+/* Dark Mode Toggle */
+.dark-mode-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.4rem;
+  cursor: pointer;
+  padding: 0.6rem;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dark-mode-toggle:hover {
+  background: rgba(0, 0, 0, 0.05);
+  transform: rotate(30deg);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 1199px) {
+  .search-bar {
+    margin: 1rem 0;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 991px) {
+  .travelnest-navbar {
+    padding: 0.8rem 1.5rem;
+  }
+  
+  .search-bar {
+    flex-direction: column;
+    border-radius: 20px;
+    padding: 1.25rem;
+    gap: 1rem;
+  }
+  
+  .search-divider {
+    height: 1px;
+    width: 100%;
+  }
+  
+  .navbar-collapse {
+    padding: 1rem 0;
+  }
+  
+  .nav-link {
+    margin: 0.25rem 0;
+    padding: 0.75rem;
+  }
+  
+  .nav-link::after {
+    display: none;
+  }
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background-color: #121212;
+  color: #f1f1f1;
+}
+
+body.dark-mode .travelnest-navbar {
+  background-color: #1e1e1e;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .nav-link {
+  color: #e0e0e0 !important;
+}
+
+body.dark-mode .search-bar {
+  background-color: #2a2a2a;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .search-bar input,
+body.dark-mode .search-bar select {
+  color: #f1f1f1;
+}
+
+body.dark-mode .search-bar input::placeholder {
+  color: #aaa;
+}
+
+body.dark-mode .search-divider {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .user-dropdown {
+  background-color: #2a2a2a;
+}
+
+body.dark-mode .dropdown-menu {
+  background-color: #2a2a2a;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+body.dark-mode .dropdown-item {
+  color: #e0e0e0;
+}
+
+body.dark-mode .dropdown-divider {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Animation for invalid form */
+.is-invalid {
+  border: 1px solid var(--travelnest-red) !important;
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+  100% { transform: translateX(0); }
+}
+
+
+</style>
+<nav class="navbar navbar-expand-lg travelnest-navbar sticky-top">
+  <div class="container-fluid">
+    <!-- Brand -->
+    <a class="navbar-brand" href="/listings">
+      <i class="fa-solid fa-house-chimney"></i>
+      <span>TravelNest</span>
+    </a>
+
+    <!-- Mobile Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-expanded="false">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar Content -->
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <!-- Left Links -->
+      <ul class="navbar-nav me-auto">
+        <li class="nav-item"><a class="nav-link" href="/listings">Explore</a></li>
+        <li class="nav-item"><a class="nav-link" href="/listings/new"></i>Host</a></li>
+      </ul>
+
+      <!-- Search Form -->
+      
+     <!-- Search Form -->
+      
+     <form class="search-bar d-flex align-items-center" method="GET" action="/listings/search" id="searchForm" novalidate>
+      <input type="text" name="destination" class="form-control" placeholder="Where to?" required />
+      <input type="date" name="checkin" class="form-control" required />
+      <input type="date" name="checkout" class="form-control" required />
+      <select name="guests" class="form-select" required>
+        <option value="">Guests</option>
+        <option>1</option><option>2</option><option>3</option><option>4</option><option>5+</option>
+      </select>
+      <button class="btn btn-search"><i class="fa-solid fa-magnifying-glass"></i></button>
+    </form>
+
+
+      <!-- Right Side -->
+      <div class="navbar-nav ms-3 d-flex align-items-center">
+        <button class="dark-mode-toggle me-3" id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
+
+        <% if (!currUser) { %>
+          <div class="dropdown">
+            <a class="btn btn-outline-primary dropdown-toggle d-flex align-items-center" href="#" data-bs-toggle="dropdown" id="loginDropdown">
+              <i class="fa-solid fa-user-lock me-2"></i>
+              <span>Login</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="loginDropdown">
+              <li><a class="dropdown-item" href="/login"><i class="fa-solid fa-user me-2"></i>User Login</a></li>
+              <li><a class="dropdown-item text-danger" href="/admin/login"><i class="fa-solid fa-user-shield me-2"></i>Admin Login</a></li>
+            </ul>
+          </div>
+        <% } else { %>
+          <div class="dropdown">
+            <a class="user-dropdown dropdown-toggle" href="#" data-bs-toggle="dropdown" id="userDropdown">
+              <img src="https://i.pravatar.cc/40?u=<%= currUser._id %>" class="user-avatar" alt="User Avatar" />
+              <span class="d-none d-xl-inline ms-2"><%= currUser.username %></span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+              <li><h6 class="dropdown-header"><%= currUser.username %></h6></li>
+              <li><a class="dropdown-item" href="/users/<%= currUser._id %>/profile"><i class="fa-solid fa-user me-2"></i>Profile</a></li>
+              <% if (currUser.role === 'admin') { %>
+                <li><a class="dropdown-item text-danger" href="/admin/dashboard"><i class="fa-solid fa-toolbox me-2"></i>Admin Dashboard</a></li>
+              <% } %>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item text-danger" href="/logout"><i class="fa-solid fa-right-from-bracket me-2"></i>Logout</a></li>
+            </ul>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<script>
+  // Dark Mode Toggle with Emoji Change
+  const darkModeToggle = document.getElementById('darkModeToggle');
+  
+  darkModeToggle.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    const isDarkMode = document.body.classList.contains('dark-mode');
+    localStorage.setItem('darkMode', isDarkMode);
+    darkModeToggle.textContent = isDarkMode ? '☀️' : '🌙';
+  });
+
+  // Initialize dark mode from localStorage
+  if (localStorage.getItem('darkMode') === 'true') {
+    document.body.classList.add('dark-mode');
+    darkModeToggle.textContent = '☀️';
+  }
+
+  // Enhanced Form Validation
+  document.getElementById('searchForm').addEventListener('submit', function(e) {
+    const fields = this.querySelectorAll('[required]');
+    let isValid = true;
+    
+    fields.forEach(field => {
+      if (!field.value) {
+        field.classList.add('is-invalid');
+        isValid = false;
+        
+        // Add error icon
+        const icon = field.previousElementSibling;
+        if (icon && icon.classList.contains('position-absolute')) {
+          icon.style.color = 'var(--travelnest-red)';
+        }
+      } else {
+        field.classList.remove('is-invalid');
+        // Reset icon color
+        const icon = field.previousElementSibling;
+        if (icon && icon.classList.contains('position-absolute')) {
+          icon.style.color = '#999';
+        }
+      }
+    });
+    
+    if (!isValid) {
+      e.preventDefault();
+      // Add shake animation to search bar
+      this.classList.add('animate__animated', 'animate__headShake');
+      setTimeout(() => {
+        this.classList.remove('animate__animated', 'animate__headShake');
+      }, 1000);
+    }
+  });
+
+  // Add focus effects to search inputs
+  const searchInputs = document.querySelectorAll('.search-bar input, .search-bar select');
+  searchInputs.forEach(input => {
+    input.addEventListener('focus', () => {
+      const icon = input.previousElementSibling;
+      if (icon && icon.classList.contains('position-absolute')) {
+        icon.style.color = 'var(--travelnest-blue)';
+      }
+    });
+    
+    input.addEventListener('blur', () => {
+      const icon = input.previousElementSibling;
+      if (icon && icon.classList.contains('position-absolute')) {
+        icon.style.color = '#999';
+      }
+    });
+  });
+</script>
+
+
+
+
+
+
+

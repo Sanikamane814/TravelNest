@@ -1,0 +1,47 @@
+<% layout("/layouts/boilerplate") %>
+
+<!-- Page Title -->
+<title>Secure Payment | <%= listing.title %></title>
+
+<div class="container col-lg-6 col-md-8 col-sm-10 mt-5 mb-5">
+  <div class="card shadow border-0 p-4 rounded-4 booking-payment-form">
+
+    <h3 class="text-center mb-4 fw-semibold">🏠 Finish Booking with Secure Payment</h3>
+
+    <form action="/listings/<%= listing._id %>/book/confirm" method="POST" class="needs-validation" novalidate>
+      
+      <!-- Cardholder Name -->
+      <div class="form-group mb-3">
+        <label class="form-label">Cardholder Name</label>
+        <input type="text" class="form-control rounded-4 input-3d" name="cardName" placeholder="e.g., Sanika Mane" required>
+        <div class="invalid-feedback">Please enter the name on your card.</div>
+      </div>
+
+      <!-- Card Number -->
+      <div class="form-group mb-3">
+        <label class="form-label">Card Number</label>
+        <input type="text" class="form-control rounded-4 input-3d" name="cardNumber" placeholder="1234 5678 9012 3456" maxlength="16" required pattern="\d{16}">
+        <div class="invalid-feedback">Please enter a valid 16-digit card number.</div>
+      </div>
+
+      <!-- Expiry and CVV -->
+      <div class="row">
+        <div class="col-md-6 mb-3">
+          <label class="form-label">Expiry Date</label>
+          <input type="text" class="form-control rounded-4 input-3d" name="expiry" placeholder="MM/YY" required pattern="^(0[1-9]|1[0-2])\/\d{2}$">
+          <div class="invalid-feedback">Use format MM/YY</div>
+        </div>
+        <div class="col-md-6 mb-3">
+          <label class="form-label">CVV</label>
+          <input type="text" class="form-control rounded-4 input-3d" name="cvv" placeholder="e.g., 123" maxlength="3" required pattern="\d{3}">
+          <div class="invalid-feedback">3-digit CVV required</div>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <button class="btn w-100 mt-3 pay-button shadow-3d" type="submit">
+        🔒 Pay & Confirm Booking
+      </button>
+    </form>
+  </div>
+</div>

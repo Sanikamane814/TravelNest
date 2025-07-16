@@ -1,0 +1,151 @@
+<% layout("layouts/boilerplate") %>
+<div class="login-wrapper">
+  <div class="login-card">
+
+    <!-- 🎨 Image Section (Sharp) -->
+    <div class="login-image">
+      <h1>Welcome to TravelNest</h1>
+      <p>Manage listings, users, and bookings with confidence and clarity.</p>
+    </div>
+
+    <!-- 🔐 Form Section -->
+    <div class="login-form">
+      <h2>Admin Login</h2>
+
+      <form method="POST" action="/admin/login" novalidate>
+        <div class="mb-3">
+          <label for="username" class="form-label">👤 Username</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+          <div class="invalid-feedback">Please enter your username.</div>
+        </div>
+
+        <div class="mb-4">
+          <label for="password" class="form-label">🔒 Password</label>
+          <input type="password" class="form-control" id="password" name="password" required>
+          <div class="invalid-feedback">Please enter your password.</div>
+        </div>
+
+        <button type="submit" class="btn btn-login">Login</button>
+      </form>
+    </div>
+
+  </div>
+</div>
+
+<!-- ✅ Bootstrap Form Validation -->
+<script>
+  (() => {
+    'use strict';
+    const forms = document.querySelectorAll('form');
+    Array.from(forms).forEach(form => {
+      form.addEventListener('submit', e => {
+        if (!form.checkValidity()) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+</script>
+<style>
+  
+/* admin login */
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #f3f4f6;
+  }
+
+  .login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+  }
+
+  .login-card {
+    display: flex;
+    flex-direction: row;
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 100%;
+    max-width: 1000px;
+  }
+
+  .login-image {
+    flex: 1;
+    background-image: url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR99x_VxvaYXi1VuuWyiHjUchiTV2l9fPrTqg&s");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 40px;
+    color: white;
+    text-shadow: 1px 1px 2px #000;
+  }
+
+  .login-image h1 {
+    font-size: 2.4rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+  }
+
+  .login-image p {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.6;
+  }
+
+  .login-form {
+    flex: 1;
+    padding: 50px;
+    background-color: #ffffff;
+  }
+
+  .login-form h2 {
+    font-weight: 600;
+    color: #dc3545;
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .form-control:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.2);
+  }
+
+  .btn-login {
+    background-color: #dc3545;
+    border: none;
+    font-weight: 500;
+    padding: 10px;
+    color: white;
+    width: 100%;
+  }
+
+  .btn-login:hover {
+    background-color: #bb2d3b;
+  }
+
+  @media (max-width: 768px) {
+    .login-card {
+      flex-direction: column;
+    }
+
+    .login-image {
+      display: none;
+    }
+
+    .login-form {
+      padding: 40px 30px;
+    }
+  }
+
+</style>

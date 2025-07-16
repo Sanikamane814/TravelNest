@@ -1,0 +1,86 @@
+ <% layout("/layouts/boilerplate") %>
+
+<!-- Main Container -->
+<div class="listing-container d-flex align-items-center justify-content-center min-vh-100">
+  <div class="listing-form-card p-4 p-md-5 rounded-4 shadow-lg">
+    <!-- Header with Icon -->
+    <div class="text-center mb-4">
+      <div class="icon-circle bg-primary mb-3 mx-auto">
+        <i class="fas fa-home text-white"></i>
+      </div>
+      <h3 class="fw-bold mb-1">Create Your Listing</h3>
+      <p class="text-muted">Share your space with travelers</p>
+    </div>
+    
+    <!-- Form to Create a New Listing -->
+    <form method="POST" action="/listings" novalidate class="needs-validation" enctype="multipart/form-data">
+      <!-- Title Field -->
+      <div class="mb-3">
+        <label for="title" class="form-label fw-semibold">Listing Title</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="fas fa-heading text-muted"></i></span>
+          <input name="listing[title]" placeholder="Beautiful apartment near city center" type="text" class="form-control rounded-end" required />
+        </div>
+        <div class="invalid-feedback">Please provide a title</div>
+      </div>
+
+      <!-- Description Field -->
+      <div class="mb-3">
+        <label for="description" class="form-label fw-semibold">Description</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light align-items-start"><i class="fas fa-align-left text-muted mt-1"></i></span>
+          <textarea name="listing[description]" class="form-control rounded-end" rows="3" required placeholder="Describe your space, amenities, and what makes it special"></textarea>
+        </div>
+        <div class="invalid-feedback">Please describe your listing</div>
+      </div>
+
+      <!-- Image Upload Field -->
+      <div class="mb-3">
+        <label for="image" class="form-label fw-semibold">Listing Photos</label>
+        <div class="file-upload-wrapper">
+          <input name="listing[image][url]" type="file" class="form-control" id="imageUpload" required />
+          <div class="file-upload-label">
+            <i class="fas fa-cloud-upload-alt me-2"></i>
+            <span>Click to upload or drag and drop</span>
+          </div>
+          <small class="text-muted">JPEG or PNG, max 5MB</small>
+        </div>
+      </div>
+
+      <!-- Price and Country Fields -->
+      <div class="row g-3 mb-3">
+        <div class="col-md-6">
+          <label for="price" class="form-label fw-semibold">Nightly Price</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="fas fa-rupee-sign text-muted"></i></span>
+            <input name="listing[price]" placeholder="1200" class="form-control rounded-end" required />
+          </div>
+          <div class="invalid-feedback">Please enter a valid price</div>
+        </div>
+        <div class="col-md-6">
+          <label for="country" class="form-label fw-semibold">Country</label>
+          <div class="input-group">
+            <span class="input-group-text bg-light"><i class="fas fa-globe text-muted"></i></span>
+            <input name="listing[country]" placeholder="India" type="text" class="form-control rounded-end" required />
+          </div>
+          <div class="invalid-feedback">Please enter a country</div>
+        </div>
+      </div>
+
+      <!-- Location Field -->
+      <div class="mb-4">
+        <label for="location" class="form-label fw-semibold">Full Address</label>
+        <div class="input-group">
+          <span class="input-group-text bg-light"><i class="fas fa-map-marker-alt text-muted"></i></span>
+          <input name="listing[location]" placeholder="123 Main St, Jaipur, Rajasthan" type="text" class="form-control rounded-end" required />
+        </div>
+        <div class="invalid-feedback">Please provide the location</div>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100 py-2 fw-bold rounded-pill shadow-sm">
+        <i class="fas fa-plus-circle me-2"></i>Create Listing
+      </button>
+    </form>
+  </div>
+</div>
