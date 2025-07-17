@@ -26,6 +26,7 @@ const userRouter = require("./routes/user.js");
 
 
 
+
 // ✅ MongoDB Connection
 const dbUrl = process.env.ATLASOB_URL || "mongodb://127.0.0.1:27017/wanderlust";
 mongoose.connect(dbUrl)
